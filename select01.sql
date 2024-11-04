@@ -52,7 +52,7 @@ SELECT ename AS "이름",
         sal "직원의 월급"
 FROM emp;
 
-중복값제거
+중복값 제거
 DISTINCT
 
 select * from emp;
@@ -176,4 +176,159 @@ FROM emp
 where ename lije '_MI'; -- 3글자 2~3번째가 MI
 where ename lije '_MI__'; -- 5글자 2~3 번째가 MI
 where ename lije '_MI%'; -- n개~글자수 2~3번째가 MI
+
+--< <= > >=
+SELECT * 
+FROM emp
+where hiredate < '1981-95-01'; -- 날짜는 미래가 더 크다
+--where hiredate = '91-95-01';
+
+-------------------
+정렬 ORDER BY
+*정렬을 사용하지 않으면 순서보장 X
+ORDER BY 정렬할 기준이 되는 컬럼명 ASC 오름차순 / DESC 내림차순
+
+SELECT ...
+FROM ...
+WHERE ...
+ORDER BY ...
+
+SELECT ...
+FROM ...
+ORDER BY ...
+;
+
+SELECT * 
+FROM student
+ORDER BY NAME; -- 오름차순
+
+SELECT * 
+FROM student
+ORDER BY NAME DESC; -- 내림차순
+
+
+
+SELECT * 
+FROM student
+order by grade desc; -- 학년기준 내림차순
+
+SELECT * 
+FROM student
+order by birthday; -- 생일 기준 오름차순
+
+SELECT * 
+FROM student
+order by birthday desc; -- 생일 기준 내림차순 ( 큰 수 > 작은 수 방향)
+                        -- 날짜에서 큰 수는? 더 최근/미래 작은 수는 ? 과거
+                        
+SELECT * 
+FROM student
+where grade in (1,2,3)
+order by grade, height desc; -- 학년 오름차순, 키는 내림차순 정렬 
+
+--------------------쿼리 연습
+
+
+SELECT * 
+FROM emp
+order by ename;
+
+SELECT * 
+FROM emp
+order by deptno, sal desc;
+
+SELECT * 
+FROM emp
+where sal>2000
+order by sal desc;
+
+SELECT * 
+FROM student
+where grade > 1
+order by birthday desc;
+
+------------------------
+집합 연산자
+UNION 합집합 (중복제거)
+UNION ALL 합집합 (중복제거X)
+INTERSECT  교집합
+MINUS 차집합
+
+    조건 (제약)
+        1. 컬럼 갯수 동일
+        2. 컬럼 데이터형 동일
+        3. 컬럼명은 상관 없음.
+---
+SELECT * 
+FROM student
+WHERE deptno1 = 101
+UNION ALL
+SELECT * 
+FROM student
+WHERE deptno1 = 102;
+
+SELECT studno, name, deptno1 -- 둘 다 존재 하는 컬럼을 선택해야 하며  
+FROM student                   -- 타입과 컬럼의 개수가 같아야함.
+WHERE deptno1 = 101
+UNION ALL
+SELECT profno, name, 0 -- 리터럴 값이라도 넣어 컬럼의 개수를 맞춰준다,
+FROM professor
+WHERE deptno = 101; 
+
+select 
+    studno idno,
+    name, 
+    deptno1 deptno, 
+    'email' -- 숫자 / 문자 / 숫자 3개 / email
+from student
+where deptno1 = 101
+
+UNION ALL
+
+select 
+    profno, 
+    name,   
+    deptno, 
+    email -- 숫자 / 문자 / 숫자 / 문자 4개
+from professor
+where deptno = 101;
+
+SELECT studno, name, deptno1, 'STD' divtype   -- 문자로 구분
+FROM student
+where deptno1 = 101
+union all
+SELECT profno, name, deptno, 'PRF'  
+FROM professor
+where deptno = 101; 
+
+SELECT studno, name, deptno1, 1 divtype  --숫자로 구분
+FROM student
+where deptno1 = 101
+union all
+SELECT profno, name, deptno, 2  
+FROM professor
+where deptno = 101;
+-----
+SELECT * 
+FROM student
+where deptno1 = 101
+intersect
+SELECT * 
+FROM student
+where deptno2 = 201;
+
+SELECT * 
+FROM student
+where deptno1 = 101 and deptno2 = 201;
+
+SELECT * 
+FROM emp
+where job = 'SALESMAN' and comm > 400;
+MINUS
+SELECT * 
+FROM emp 
+where hiredate <'1982-01-01';
+
+
+
 

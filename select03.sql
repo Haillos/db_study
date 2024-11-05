@@ -114,5 +114,77 @@ from dual;
 
 SELECT 
     sysdate,
-    TO_CHAR(sysdate, 'yyyy-mm-dd hh24:MI:ss')
+    TO_CHAR(sysdate, 'yyyy-mm-dd hh24:MI:ss'),
+    TO_CHAR(sysdate, 'hh24:MI:ss'),
+    TO_CHAR(round(sysdate), 'yyyy-mm-dd hh24:MI:ss')
 FROM dual;
+
+select
+    to_char(1234, '999999'),
+    to_char(1234, '099999'),
+    to_char(1234, '$99999'),
+    '$' || 1234,
+    to_char(1234, '99999.99'),
+    to_char(1234, '99,999')
+from;
+
+--문자 > 날짜 TO_DATE
+SELECT
+    TO_DATE('2024-06-02') + 3,
+    TO_DATE('2024/06/02') + 3,
+    TO_DATE('24/06/02') + 3,
+    TO_DATE('20240602') + 3,
+    LAST_DAY('2024-08-05'),
+    TO_DATE('24:06:02') + 3,
+    TO_CHAR(sysdate, 'yyyy/mm/DD'),
+    TO_DATE('2024-01-05', 'YYYY-MM-DD'),
+    TO_DATE('2024-01-05', 'YYYY,MM,DD'),
+    TO_DATE('12/10/20', 'MM/DD/YY')--12년 10월 20일 >> 12월 10일 20년
+FROM dual;
+
+--NVL
+SELECT
+    sal,
+    comm,
+    sal*12+comm,
+    sal*12+nvl(comm,0) --숫자*12 + NULL
+FROM emp;
+
+SELECT -- NVL2 연습문제
+    NVL(null, 10),
+    NVL2(123, '있다', '없다'),
+    NVL2(null, '있다', '없다')
+from dual;
+
+SELECT 
+decode(10,10,'같다','다르다'),
+decode(10,10,'같다'), -- 다르면 Null
+decode(10, 30, '30이다', 40, '40이다', 50, '50이다', 60, '60이다', '아니다')
+FROM dual;
+
+SELECT
+deptno, name,
+decode(deptno, 101, 'Computer Enginerring', 102, 'Multimedia Engineerong', 103, 'Software Engineering' , 'ETC') dept, 
+decode(name, 'Audie Murphy' ,decode(deptno, 101, 'Best!' )),
+decode(deptno, 101, '컴퓨터공학', null)
+FROM professor;
+
+--case
+SELECT
+    grade,
+    decode(grade, 1 , '저학년', 2, '저학년', 3, '고학년', 4, '고학년'),
+    case grade
+        when 1 then '저학년'
+        when 2 then '저학년'
+        when 3 then '고학년'
+        when 4 then '고학년'
+    end as "학년구분",
+
+    case
+        when grade in (1,2) then '저학년'
+        when grade between 3 and 4 then '고학년'
+    end 학년구분
+FROM student
+
+
+

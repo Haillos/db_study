@@ -107,8 +107,15 @@ c.total 점수,
 h.grade  학점
 from student s, score c, hakjum h
 where s.studno = c.studno
-        and c.total between h.min_point and h.max_point ;
-
+        and c.total between h.min_point and h.max_point 
+        order by h.grade;
 select *
 from hakjum;
+
+--- 내 사번, 내이름, 내상사 사번, 상사이름
+select *
+from emp e1, emp e2
+where e1.mgr = e2.empno;
+
+
 

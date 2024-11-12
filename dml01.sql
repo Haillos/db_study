@@ -41,3 +41,18 @@ VALUES(2, null, null);
 UPDATE 테이블명
 SET 컬럼명 = 값
 WHERE 조건
+
+--여러개 동시 저장
+INSERT ALL
+INTO tt02 VALUES(8, '이름8', null),
+INTO tt02 VALUES(9, '이름9', null),
+INTO tt02 VALUES(10, '이름10', null);
+select * from tt02;
+
+INSERT INTO tt02 
+SELECT 11,'샘플', SYSDATE FROM dual;
+
+INSERT INTO tt02
+select deptno, loc, SYSDATE from dept;
+
+

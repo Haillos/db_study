@@ -19,3 +19,8 @@ INSERT INTO T_ITEM_LIST (no, item_name, price)
 VALUES ( (T_ITEM_LIST_PK_SEQ.nextval) , '순대', 1200);
 
 SELECT * FROM T_ITEM_LIST;
+
+INSERT ALL
+INTO T_ITEM_LIST (no, item_name, price) VALUES ( (T_ITEM_LIST_PK_SEQ.nextval) , '순대', 1200)
+INTO T_ITEM_LIST (no, item_name, price) VALUES ( (T_ITEM_LIST_PK_SEQ.nextval) , '순대', 1200);
+select * from dual;

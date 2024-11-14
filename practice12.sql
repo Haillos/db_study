@@ -41,3 +41,19 @@ group by CASE
         END
         order by price_group;
 
+---
+select price price_group, count(*) products
+from(
+    select product_id, product_code, TRUNC(price/10000) * 10000 price
+    from product_quiz)
+group by price
+order by price
+;
+---
+select price price_group, count(*) products
+from (
+    select TRUNC(price/10000)*10000 price
+    from product_quiz)
+    group by price
+    order by price
+    ;
